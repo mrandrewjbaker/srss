@@ -1,7 +1,33 @@
+var nightShade = document.createElement("div");
+    nightShade.setAttribute("id", "night-shade");
+
+    document.body.appendChild(nightShade);
 
 var date = new Date(),
 
     srss = {
+        
+        nightFunctions: function(){
+            console.log("night functions");
+            
+            
+            
+            nightShade.removeAttribute("class","shade-inactive");
+            nightShade.setAttribute("class", "shade-active");
+            
+            
+            
+        },
+        
+        dayFunctions: function(){
+          
+            console.log("day functions");
+            
+            nightShade.removeAttribute("class","shade-active");
+            nightShade.setAttribute("class", "shade-inactive");
+            
+            
+        },
     
         user: {
             
@@ -170,15 +196,18 @@ var date = new Date(),
                         
                         if(srss.user.time.totalMinutes < srss.user.time.sunset.withUTCOffset){
                             console.log("The users time is less than the sunset");
-                            $("#night-shade").addClass("shade-inactive");
+                            
+                            
+                            srss.dayFunctions();
                             
                             srss.user.time.isDay = true;
                             srss.user.time.isNight = false;
                             
                         }else if(srss.user.time.totalMinutes >= srss.user.time.sunset.withUTCOffset){
                             console.log("The users time is greater than the sunset");
-                            $("#night-shade").addClass("shade-active");
                             
+                            
+                            srss.nightFunctions();
                             
                             srss.user.time.isDay = false;
                             srss.user.time.isNight = true;
@@ -191,15 +220,25 @@ var date = new Date(),
                         
                         if(srss.user.time.totalMinutes < srss.user.time.sunrise.withUTCOffset){
                             console.log("The users time is more than the sunrise");
-                            $("#night-shade").addClass("shade-active");
+                            
+                            
+                            srss.nightFunctions();
+                            
+                            srss.user.time.isDay = false;
+                            srss.user.time.isNight = true;
+                            
                         }else if(srss.user.time.totalMinutes > srss.user.time.sunrise.withUTCOffset){
                             console.log("The users time is more than the sunrise");
-                            $("#night-shade").addClass("shade-inactive");
+                            
+                            
+                            srss.dayFunctions();
+                            
+                            srss.user.time.isDay = true;
+                            srss.user.time.isNight = false;
                         
                         }
                         
-                        srss.user.time.isDay = true;
-                        srss.user.time.isNight = false;
+                        
                         
                     }
                  
@@ -320,6 +359,8 @@ srss.user.location.get();
 
 
 srss.user.time.get();
+
+document.body.appendChild(nightShade);
 
 setTimeout(function(){
 
