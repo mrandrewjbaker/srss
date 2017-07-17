@@ -360,8 +360,6 @@ srss.user.location.get();
 
 srss.user.time.get();
 
-document.body.appendChild(nightShade);
-
 setTimeout(function(){
 
     initCheckTime();
